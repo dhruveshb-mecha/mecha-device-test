@@ -25,7 +25,7 @@ const DEFAULT_COVERAGE: &str = "all";
 
 #[derive(Debug, Subcommand)]
 enum Commands {
-    /// Clones repos
+    /// run test
     #[command(arg_required_else_help = true)]
     Test {
         ///  tests to run, if not specified defaults to all
@@ -54,19 +54,20 @@ fn main() {
             let profile_file = File::open(&profile).expect("Failed to open config file");
             let reader = BufReader::new(profile_file);
 
-            let device_config: DeviceConfig = serde_yaml::from_reader(reader).unwrap();
+            // let device_config: DeviceConfig = serde_yaml::from_reader(reader).unwrap();
 
             //println!("device_config: {:?}", device_config);
-            println!(
-                "device_config: {:?}",
-                device_config.interfaces.display.device
-            );
+            // println!(
+            //     "device_config: {:?}",
+            //     device_config.interfaces.display.device
+            // );
 
             let mut display = Display {
                 path: String::new(),
             };
 
-            display.set_device(&device_config.interfaces.display.device);
+            // display.set_device(&device_config.interfaces.display.device);
+            display.set_device("/sys/class/backlight/backlight/brightness");
             display.set_brightness(144).unwrap();
             display.info();
             let brightness = display.get_brightness().unwrap();
