@@ -9,6 +9,9 @@ mod base_cli;
 use base_cli::DeviceConfig;
 use clap::{Args, Parser, Subcommand, ValueEnum};
 
+use mecha_display::Display;
+use mecha_display::DisplayInterface;
+
 /// A fictional versioning CLI
 #[derive(Debug, Parser)] // requires `derive` feature
 #[command(name = "test")]
@@ -58,6 +61,22 @@ fn main() {
                 "device_config: {:?}",
                 device_config.interfaces.display.device
             );
+
+            let mut display = Display {
+                path: String::new(),
+            };
+
+            display.set_device(&device_config.interfaces.display.device);
+            display.set_brightness(144).unwrap();
+            display.info();
+            let brightness = display.get_brightness().unwrap();
+            println!("Brightness: {}", brightness);
+
+            display.set_brightness(255).unwrap();
+
+            let brightness = display.get_brightness().unwrap();
+            println!("Brightness: {}", brightness);
+            println!("Device: {}", display.get_device());
         }
     }
 }

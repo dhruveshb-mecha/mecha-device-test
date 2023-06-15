@@ -1,0 +1,4 @@
+name: mecha-compute-g1
+interfaces:
+   display: 
+     device: /sys/class/backlight/backlight/brightness
