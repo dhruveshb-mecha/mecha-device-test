@@ -4,10 +4,10 @@ use std::fs::File;
 use std::io::BufReader;
 use std::path::PathBuf;
 
-mod base_cli;
+mod config;
 
-use base_cli::DeviceConfig;
 use clap::{Args, Parser, Subcommand, ValueEnum};
+use config::DeviceConfig;
 
 use mecha_display::Display;
 use mecha_display::DisplayInterface;
