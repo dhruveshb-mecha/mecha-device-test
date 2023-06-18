@@ -1,5 +1,3 @@
-use std::ffi::OsStr;
-use std::ffi::OsString;
 use std::fs::File;
 use std::io::BufReader;
 use std::path::PathBuf;
@@ -7,7 +5,18 @@ use std::path::PathBuf;
 mod base_cli;
 
 use base_cli::DeviceConfig;
-use clap::{Args, Parser, Subcommand, ValueEnum};
+use clap::{Parser, Subcommand};
+use test_base::{TestAssertion, TestRunner};
+use tests::display::display_brightness::DisplayBrightness;
+use tests::display::display_detect::DisplayDetect;
+mod test_base;
+
+mod tests {
+    pub mod display {
+        pub mod display_brightness;
+        pub mod display_detect;
+    }
+}
 
 /// A fictional versioning CLI
 #[derive(Debug, Parser)] // requires `derive` feature
@@ -39,6 +48,18 @@ enum Commands {
     },
 }
 
+///filter test cases by coverage
+fn filter_test_cases(
+    test_cases: Vec<(&str, Box<dyn TestAssertion>)>,
+    filter: &str,
+) -> Vec<Box<dyn TestAssertion>> {
+    test_cases
+        .into_iter()
+        .filter(|(param, _)| param == &filter)
+        .map(|(_, assertion)| assertion)
+        .collect()
+}
+
 fn main() {
     let args = Cli::parse();
 
@@ -53,11 +74,55 @@ fn main() {
 
             let device_config: DeviceConfig = serde_yaml::from_reader(reader).unwrap();
 
-            //println!("device_config: {:?}", device_config);
-            println!(
-                "device_config: {:?}",
-                device_config.interfaces.display.device
-            );
+            let test_cases: Vec<(&str, Box<dyn TestAssertion>)> = vec![
+                (
+                    "display",
+                    Box::new(DisplayDetect {
+                        device: device_config.interfaces.display.device.clone(),
+                    }),
+                ),
+                (
+                    "display",
+                    Box::new(DisplayBrightness {
+                        device: device_config.interfaces.display.device.clone(),
+                    }),
+                ),
+                // we can add all test case over here.
+                // (
+                //     "led",
+                //     Box::new(LedDetect {
+                //         device: device_config.interfaces.display.device.clone(),
+                //     }),
+                // ),
+            ];
+
+            let mut suit: Vec<Box<dyn TestAssertion>> = Vec::new();
+
+            match coverage.as_str() {
+                "all" => {
+                    suit = test_cases
+                        .into_iter()
+                        .map(|(_, assertion)| assertion)
+                        .collect();
+                }
+                "display" => {
+                    suit = filter_test_cases(test_cases, "display");
+                }
+                "led" => {
+                    suit = filter_test_cases(test_cases, "led");
+                }
+                _ => panic!("Invalid coverage: {}", coverage),
+            }
+
+            let mut test_suite = TestRunner {
+                suit,
+                test_count: 0,
+                test_passed: 0,
+                test_failed: 0,
+                test_runner: || println!("Running tests"),
+            };
+
+            test_suite.run().unwrap();
         }
     }
 }
