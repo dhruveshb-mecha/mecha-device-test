@@ -1,3 +1,5 @@
+use std::io::{self, Write};
+
 use anyhow::Result;
 
 pub trait TestAssertion {
@@ -25,5 +27,22 @@ impl TestRunner {
             }
         }
         Ok(())
+    }
+}
+
+pub fn question_prompt(question: String) -> bool {
+    print!("{} [y/n] ", question);
+    let mut answer = String::new();
+    io::stdout().flush().unwrap();
+    io::stdin().read_line(&mut answer).unwrap();
+    let answer = answer.trim();
+
+    match answer {
+        "y" | "Y" => true,
+        "n" | "N" => false,
+        _ => {
+            println!("Invalid input, please try again");
+            question_prompt(question)
+        }
     }
 }

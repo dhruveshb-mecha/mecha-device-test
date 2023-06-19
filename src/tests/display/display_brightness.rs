@@ -1,4 +1,4 @@
-use crate::test_base::TestAssertion;
+use crate::test_base::{question_prompt, TestAssertion};
 use anyhow::Result;
 use mecha_display::{Display, DisplayInterface};
 
@@ -16,11 +16,28 @@ impl TestAssertion for DisplayBrightness {
             path: String::new(),
         };
 
-        // will be replaced with actual behaviour using sdk
+        // will be replaced with actual behavior using SDK
         display.set_device("/sys/class/backlight/backlight/brightness");
-        // display.set_brightness(144).unwrap();
 
-        println!("Display Brightness: {}", 100);
+        // Brightness level to test (100% and 10%)
+        let brightness_levels = [100, 10];
+
+        for brightness in &brightness_levels {
+            if let Err(err) = display.set_brightness(*brightness) {
+                println!("Failed to set display brightness: {}", err);
+                return Ok(false);
+            }
+
+            let user_response =
+                question_prompt(format!("Is the display brightness set to {}%?", brightness));
+            if user_response {
+                println!("Display Brightness: {}", brightness);
+            } else {
+                let current_brightness = display.get_brightness()?;
+                println!("Display Brightness: {}", current_brightness);
+                return Ok(false);
+            }
+        }
 
         Ok(true)
     }
