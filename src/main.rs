@@ -72,7 +72,8 @@ fn main() {
             let profile_file = File::open(&profile).expect("Failed to open config file");
             let reader = BufReader::new(profile_file);
 
-            let device_config: DeviceConfig = serde_yaml::from_reader(reader).unwrap();
+            let device_config: DeviceConfig =
+                serde_yaml::from_reader(reader).expect("unable to rad yaml file");
 
             let test_cases: Vec<(&str, Box<dyn TestAssertion>)> = vec![
                 (
