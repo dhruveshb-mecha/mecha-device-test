@@ -1,4 +1,4 @@
-use crate::test_base::{question_prompt, TestAssertion};
+use crate::test_base::{log_message, question_prompt, Device, MessageType, TestAssertion};
 use anyhow::Result;
 use mecha_power_supply::{Battery, PowerSupply, PowerSupplyInfo};
 
@@ -16,30 +16,52 @@ impl TestAssertion for BatteryCharging {
             path: String::new(),
         };
 
+        log_message(
+            Device::Battery,
+            MessageType::Action,
+            "Setting Battery Device",
+        );
+
         // will be replaced with actual behavior using SDK
         battery.set_device("/sys/class/power_supply/bq27441-0/uevent");
 
-        println!("Please plug in the charger  to continue");
+        log_message(
+            Device::Battery,
+            MessageType::Action,
+            "Please plug-in the charger in 5 seconds to continue",
+        );
         std::thread::sleep(std::time::Duration::from_secs(5));
         // We need to ask the user to plug in the charger.
         // If the charger is plugged in, we will check if the battery is charging.
-        let user_response = question_prompt("Is the battery charging?".to_owned());
+        let user_response = question_prompt(
+            Device::Battery,
+            MessageType::Confirm,
+            "is battery charging ?".to_string(),
+        );
         if user_response {
-            println!("Battery Charging");
+            log_message(Device::Battery, MessageType::Action, "Battery Charging");
         } else {
-            println!("Battery Not Charging");
+            log_message(Device::Battery, MessageType::Action, "Battery Discharging");
         }
 
-        println!("Please unplug the charger and press enter to continue");
+        log_message(
+            Device::Battery,
+            MessageType::Action,
+            "Please unplug the charger in 5 seconds to continue",
+        );
         //wait for 5 seconds
         std::thread::sleep(std::time::Duration::from_secs(5));
         // We need to ask the user to unplug the charger.
         // If the charger is unplugged, we will check if the battery is discharging.
-        let user_response = question_prompt("Is the battery discharging?".to_owned());
+        let user_response = question_prompt(
+            Device::Battery,
+            MessageType::Confirm,
+            "is battery discharging ?".to_string(),
+        );
         if user_response {
-            println!("Battery Discharging");
+            log_message(Device::Battery, MessageType::Action, "Battery Charging");
         } else {
-            println!("Battery Not Discharging");
+            log_message(Device::Battery, MessageType::Action, "Battery Discharging");
         }
 
         Ok(true)

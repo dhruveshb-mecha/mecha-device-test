@@ -1,4 +1,4 @@
-use crate::test_base::{question_prompt, TestAssertion};
+use crate::test_base::{log_message, question_prompt, Device, MessageType, TestAssertion};
 use anyhow::Result;
 use mecha_display::{Display, DisplayInterface};
 
@@ -16,25 +16,44 @@ impl TestAssertion for DisplayBrightness {
             path: String::new(),
         };
 
+        //log action that setting display device
+        log_message(
+            Device::Display,
+            MessageType::Action,
+            "Setting Display Device",
+        );
+
         // will be replaced with actual behavior using SDK
         display.set_device("/sys/class/backlight/backlight/brightness");
 
         // Brightness level to test (100% and 10%)
         let brightness_levels = [255, 16];
 
+        log_message(
+            Device::Display,
+            MessageType::Action,
+            "Setting Display Brightness",
+        );
+
         for brightness in &brightness_levels {
             if let Err(err) = display.set_brightness(*brightness) {
-                println!("Failed to set display brightness: {}", err);
+                let error_message = format!("Failed to set display brightness: {}", err);
+                log_message(Device::Display, MessageType::Error, &error_message);
                 return Ok(false);
             }
 
-            let user_response =
-                question_prompt(format!("Is the display brightness set to {}%?", brightness));
+            let user_response = question_prompt(
+                Device::Display,
+                MessageType::Confirm,
+                format!("is the display brightness set to {}%?", brightness),
+            );
             if user_response {
-                println!("Display Brightness: {}", brightness);
+                let user_rsepose_message = format!("Display Brightness: {}", brightness);
+                log_message(Device::Display, MessageType::Pass, &user_rsepose_message);
             } else {
                 let current_brightness = display.get_brightness()?;
-                println!("Display Brightness: {}", current_brightness);
+                let user_resonse_message = format!("Display Brightness: {}", current_brightness);
+                log_message(Device::Display, MessageType::Fail, &user_resonse_message);
                 return Ok(false);
             }
         }

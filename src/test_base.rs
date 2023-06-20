@@ -1,4 +1,8 @@
-use std::io::{self, Write};
+use std::{
+    fs::OpenOptions,
+    io::{self, Write},
+    time::SystemTime,
+};
 
 use anyhow::Result;
 
@@ -30,8 +34,9 @@ impl TestRunner {
     }
 }
 
-pub fn question_prompt(question: String) -> bool {
-    print!("{} [y/n] ", question);
+pub fn question_prompt(device: Device, message_type: MessageType, message: String) -> bool {
+    print!("[{:?}] {:?}: {} [y/n] ", device, message_type, message);
+
     let mut answer = String::new();
     io::stdout().flush().unwrap();
     io::stdin().read_line(&mut answer).unwrap();
@@ -42,7 +47,43 @@ pub fn question_prompt(question: String) -> bool {
         "n" | "N" => false,
         _ => {
             println!("Invalid input, please try again");
-            question_prompt(question)
+            question_prompt(device, message_type, message)
         }
+    }
+}
+
+#[derive(Debug, Clone, Copy)]
+pub enum Device {
+    Display,
+    Motion,
+    Battery,
+    Camera, // Add more devices as needed
+}
+#[derive(Debug, Clone, Copy)]
+pub enum MessageType {
+    Test,
+    Info,
+    Action,
+    Confirm,
+    Pass,
+    Fail,
+    Error,
+    // Add more message types as needed
+}
+
+pub fn log_message(device: Device, message_type: MessageType, message: &str) {
+    println!("[{:?}] {:?}: {}", device, message_type, message);
+    write_to_file(format!("[{:?}] {:?}: {}", device, message_type, message));
+}
+
+fn write_to_file(log_message: String) {
+    let mut file = OpenOptions::new()
+        .create(true)
+        .append(true)
+        .open("log.txt")
+        .expect("Failed to open log file.");
+
+    if let Err(e) = writeln!(file, "{}", log_message) {
+        eprintln!("Error writing to log file: {}", e);
     }
 }

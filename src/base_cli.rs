@@ -9,9 +9,25 @@ pub struct DeviceConfig {
 #[derive(Debug, Deserialize, Serialize, Default)]
 pub struct Interfaces {
     pub display: Display,
+    pub battery: Battery,
+    pub gyroscope: Gyroscope,
 }
 
 #[derive(Debug, Deserialize, Serialize, Default)]
 pub struct Display {
     pub device: String,
+}
+
+#[derive(Debug, Deserialize, Serialize, Default)]
+pub struct Battery {
+    pub device: String,
+    pub capacity: String,
+    pub voltage: String,
+}
+
+#[derive(Debug, Deserialize, Serialize, Default)]
+pub struct Gyroscope {
+    pub x_axis: String,
+    pub y_axis: String,
+    pub z_axis: String,
 }

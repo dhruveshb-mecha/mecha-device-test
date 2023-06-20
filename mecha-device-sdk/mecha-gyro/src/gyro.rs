@@ -10,9 +10,9 @@ pub trait GyroscopeTrait {
 }
 
 pub struct Gyroscope {
-    x_axis: String,
-    y_axis: String,
-    z_axis: String,
+    pub x_axis: String,
+    pub y_axis: String,
+    pub z_axis: String,
 }
 
 impl GyroscopeTrait for Gyroscope {

@@ -1,4 +1,4 @@
-use crate::test_base::TestAssertion;
+use crate::test_base::{log_message, Device, MessageType, TestAssertion};
 use anyhow::{bail, Result};
 
 pub(crate) struct DisplayDetect {
@@ -11,15 +11,17 @@ impl TestAssertion for DisplayDetect {
     }
 
     fn test(&self) -> Result<bool> {
-        // will be replaced with actual behaviour using sdk
-        // Perform the test logic
         let display_detected = true; // Replace with your actual detection logic
-
+        log_message(Device::Display, MessageType::Action, "Detecting Display");
         if display_detected {
-            println!("Display Detected",);
+            log_message(Device::Display, MessageType::Info, "Display Detected");
             Ok(true)
         } else {
-            println!("Display Detection test failed!");
+            log_message(
+                Device::Display,
+                MessageType::Fail,
+                "Display Detection test failed!",
+            );
             Ok(false) // Return false to indicate test failure, but still continue executing other tests
         }
     }
