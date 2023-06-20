@@ -10,7 +10,7 @@ impl TestAssertion for CameraImageCapture {
     }
 
     fn test(&self) -> Result<bool> {
-        let mut camera = Camera;
+        let camera = Camera;
         camera.capture_image("test_image")?;
 
         let user_response = question_prompt("Is the camera image captured?".to_owned());

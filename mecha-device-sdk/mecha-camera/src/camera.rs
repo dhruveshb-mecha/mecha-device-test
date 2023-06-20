@@ -38,7 +38,7 @@ impl CameraInterface for Camera {
         // Wait for the pipeline to be ready
         let bus = pipeline.bus().expect("Pipeline has no bus");
         let msg = bus.timed_pop_filtered(
-            gstreamer::ClockTime::SECOND * 2,
+            gstreamer::ClockTime::SECOND * 5,
             &[gstreamer::MessageType::Eos, gstreamer::MessageType::Error],
         );
         match msg {
