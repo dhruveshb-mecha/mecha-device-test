@@ -13,4 +13,5 @@ clap = { version = "4.3.3", features = ["derive"] }
 serde = { version = "1.0.164", features = ["derive"] }
 serde_yaml = "0.9.21"
 mecha-display = { path = "mecha-device-sdk/mecha-display" }
+mecha-camera = { path = "mecha-device-sdk/mecha-camera" }
 # display ={ path = "device-sdk/display"}

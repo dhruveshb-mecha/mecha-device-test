@@ -6,15 +6,21 @@ mod base_cli;
 
 use base_cli::DeviceConfig;
 use clap::{Parser, Subcommand};
+
 use test_base::{TestAssertion, TestRunner};
+use tests::camera::capture_image::CameraImageCapture;
 use tests::display::display_brightness::DisplayBrightness;
 use tests::display::display_detect::DisplayDetect;
+
 mod test_base;
 
 mod tests {
     pub mod display {
         pub mod display_brightness;
         pub mod display_detect;
+    }
+    pub mod camera {
+        pub mod capture_image;
     }
 }
 
@@ -88,6 +94,7 @@ fn main() {
                         device: device_config.interfaces.display.device.clone(),
                     }),
                 ),
+                ("camera", Box::new(CameraImageCapture)),
                 // we can add all test case over here.
                 // (
                 //     "led",
