@@ -20,7 +20,7 @@ impl TestAssertion for DisplayBrightness {
         display.set_device("/sys/class/backlight/backlight/brightness");
 
         // Brightness level to test (100% and 10%)
-        let brightness_levels = [100, 10];
+        let brightness_levels = [255, 16];
 
         for brightness in &brightness_levels {
             if let Err(err) = display.set_brightness(*brightness) {
