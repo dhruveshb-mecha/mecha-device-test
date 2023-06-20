@@ -57,6 +57,7 @@ pub enum Device {
     Display,
     Motion,
     Battery,
+    Audio,
     Camera, // Add more devices as needed
 }
 #[derive(Debug, Clone, Copy)]

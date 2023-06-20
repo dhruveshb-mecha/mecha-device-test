@@ -10,7 +10,7 @@ use clap::{Parser, Subcommand};
 use test_base::{TestAssertion, TestRunner};
 use tests::battery::battery_charging::BatteryCharging;
 use tests::battery::battery_detect::BatteryDetect;
-use tests::camera::capture_image::CameraImageCapture;
+// use tests::camera::capture_image::CameraImageCapture;
 use tests::display::display_brightness::DisplayBrightness;
 use tests::display::display_detect::DisplayDetect;
 use tests::gyro::gyro_data::GyroData;
@@ -35,6 +35,11 @@ mod tests {
     pub mod gyro {
         pub mod gyro_data;
         pub mod gyro_detect;
+    }
+
+    pub mod mic {
+        pub mod audio_playback;
+        pub mod audio_record;
     }
 }
 

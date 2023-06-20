@@ -1,5 +1,5 @@
 use crate::test_base::{log_message, Device, MessageType, TestAssertion};
-use anyhow::{bail, Result};
+use anyhow::Result;
 
 pub(crate) struct DisplayDetect {
     pub device: String,

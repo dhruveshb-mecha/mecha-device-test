@@ -16,4 +16,5 @@ mecha-display = { path = "mecha-device-sdk/mecha-display" }
 mecha-camera = { path = "mecha-device-sdk/mecha-camera" }
 mecha-power-supply = { path = "mecha-device-sdk/mecha-power-supply" }
 mecha-gyro = { path = "mecha-device-sdk/mecha-gyro" }
+mecha-mic = { path = "mecha-device-sdk/mecha-mic" }
 # display ={ path = "device-sdk/display"}

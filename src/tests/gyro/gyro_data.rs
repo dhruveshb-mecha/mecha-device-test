@@ -1,5 +1,3 @@
-use std::result;
-
 use mecha_gyro::{Gyroscope, GyroscopeTrait};
 
 use crate::test_base::{log_message, question_prompt, Device, MessageType, TestAssertion};
