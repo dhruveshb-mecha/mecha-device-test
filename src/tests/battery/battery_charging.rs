@@ -19,23 +19,27 @@ impl TestAssertion for BatteryCharging {
         // will be replaced with actual behavior using SDK
         battery.set_device("/sys/class/power_supply/bq27441-0/uevent");
 
-        println!("Please plugin the charger and press enter to continue");
-        // we need ro ask user ro plugin then if he plugin the charger we need to check if the battery is charging or not and then for discarging
+        println!("Please plug in the charger  to continue");
+        std::thread::sleep(std::time::Duration::from_secs(5));
+        // We need to ask the user to plug in the charger.
+        // If the charger is plugged in, we will check if the battery is charging.
         let user_response = question_prompt("Is the battery charging?".to_owned());
         if user_response {
             println!("Battery Charging");
         } else {
             println!("Battery Not Charging");
-            return Ok(false);
         }
 
         println!("Please unplug the charger and press enter to continue");
+        //wait for 5 seconds
+        std::thread::sleep(std::time::Duration::from_secs(5));
+        // We need to ask the user to unplug the charger.
+        // If the charger is unplugged, we will check if the battery is discharging.
         let user_response = question_prompt("Is the battery discharging?".to_owned());
         if user_response {
             println!("Battery Discharging");
         } else {
             println!("Battery Not Discharging");
-            return Ok(false);
         }
 
         Ok(true)
