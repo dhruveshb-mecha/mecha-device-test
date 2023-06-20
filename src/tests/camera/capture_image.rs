@@ -12,7 +12,8 @@ impl TestAssertion for CameraImageCapture {
     fn test(&self) -> Result<bool> {
         let camera = Camera;
         camera.capture_image("test_image")?;
-
+        print!("Capturing Image Please wait...");
+        std::thread::sleep(std::time::Duration::from_secs(2));
         let user_response = question_prompt("Is the camera image captured?".to_owned());
         if user_response {
             println!("Camera Image Captured");
