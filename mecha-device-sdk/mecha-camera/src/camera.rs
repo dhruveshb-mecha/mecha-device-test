@@ -52,6 +52,8 @@ impl CameraInterface for Camera {
                     );
                 }
                 gstreamer::MessageView::Eos(..) => {
+                    // i need to brake the loop here after 5 seconds
+                    print!("Capturing Image Please wait...");
                     info!("Recording finished");
                 }
                 _ => unreachable!(),
