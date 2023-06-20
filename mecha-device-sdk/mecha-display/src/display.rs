@@ -27,7 +27,7 @@ impl DisplayInterface for Display {
     fn set_brightness(&self, brightness: u8) -> Result<(), Error> {
         let mut file = BufWriter::new(File::create(&self.path)?);
         println!("Set Brightness: {}", brightness);
-        // file.write_all(brightness.to_string().as_bytes())?;
+        file.write_all(brightness.to_string().as_bytes())?;
         Ok(())
     }
 
