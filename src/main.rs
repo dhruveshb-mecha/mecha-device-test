@@ -29,6 +29,11 @@ mod tests {
         pub mod battery_charging;
         pub mod battery_detect;
     }
+
+    pub mod gyro {
+        pub mod gyro_data;
+        pub mod gyro_detect;
+    }
 }
 
 /// A fictional versioning CLI
