@@ -8,6 +8,8 @@ use base_cli::DeviceConfig;
 use clap::{Parser, Subcommand};
 
 use test_base::{TestAssertion, TestRunner};
+use tests::battery::battery_charging::BatteryCharging;
+use tests::battery::battery_detect::BatteryDetect;
 use tests::camera::capture_image::CameraImageCapture;
 use tests::display::display_brightness::DisplayBrightness;
 use tests::display::display_detect::DisplayDetect;
@@ -21,6 +23,11 @@ mod tests {
     }
     pub mod camera {
         pub mod capture_image;
+    }
+
+    pub mod battery {
+        pub mod battery_charging;
+        pub mod battery_detect;
     }
 }
 
@@ -94,7 +101,20 @@ fn main() {
                         device: device_config.interfaces.display.device.clone(),
                     }),
                 ),
-                ("camera", Box::new(CameraImageCapture)),
+                // add battery test cases over here
+                (
+                    "battery",
+                    Box::new(BatteryDetect {
+                        device: device_config.interfaces.display.device.clone(),
+                    }),
+                ),
+                (
+                    "battery",
+                    Box::new(BatteryCharging {
+                        device: device_config.interfaces.display.device.clone(),
+                    }),
+                ),
+                // ("camera", Box::new(CameraImageCapture)),
                 // we can add all test case over here.
                 // (
                 //     "led",
