@@ -1,5 +1,5 @@
 use anyhow::Error;
-use gstreamer::prelude::*;
+use gstreamer::{prelude::*, ClockTime};
 use log::{error, info};
 
 pub trait CameraInterface {
@@ -61,6 +61,10 @@ impl CameraInterface for Camera {
             }
         }
 
+        // Stop the pipeline after 3 seconds
+        let timeout = ClockTime::from_seconds(3);
+        let clock = pipeline.clock().unwrap();
+        clock.set_timeout(timeout);
         // Stop the pipeline
         info!("Stopping recording");
         pipeline.set_state(gstreamer::State::Null)?;
