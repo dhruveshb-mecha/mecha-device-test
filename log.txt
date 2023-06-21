@@ -1,0 +1,22 @@
+[Display] Action: Detecting Display
+[Display] Info: Display Detected
+[Display] Action: Setting Display Device
+[Display] Action: Setting Display Brightness
+[Display] Error: Failed to set display brightness: No such file or directory (os error 2)
+[Battery] Action: Setting Battery Device
+[Battery] Action: Please plug-in the charger in 5 seconds to continue
+[Battery] Action: Battery Charging
+[Battery] Action: Please unplug the charger in 5 seconds to continue
+[Battery] Action: Battery Discharging
+[Motion] Action: Setting Gyro Device
+[Motion] Pass: Gyro Device Set
+[Motion] Info: Getting Gyro Data
+[Display] Action: Detecting Display
+[Display] Info: Display Detected
+[Display] Action: Setting Display Device
+[Display] Action: Setting Display Brightness
+[Display] Error: Failed to set display brightness: No such file or directory (os error 2)
+[Battery] Action: Setting Battery Device
+[Battery] Action: Please plug-in the charger in 5 seconds to continue
+[Battery] Action: Battery Charging
+[Battery] Action: Please unplug the charger in 5 seconds to continue

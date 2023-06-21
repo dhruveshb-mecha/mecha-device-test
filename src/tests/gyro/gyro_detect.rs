@@ -25,10 +25,10 @@ impl TestAssertion for GyroDetect {
 
         gyro.set_device(&self.x_axis_path, &self.y_axis_path, &self.z_axis_path);
 
-        //printx,y,z axis paths
-        // println!("x_axis_path: {}", self.x_axis_path);
-        // println!("y_axis_path: {}", self.y_axis_path);
-        // println!("z_axis_path: {}", self.z_axis_path);
+        // printx,y,z axis paths
+        println!("x_axis_path: {}", self.x_axis_path);
+        println!("y_axis_path: {}", self.y_axis_path);
+        println!("z_axis_path: {}", self.z_axis_path);
 
         //if gyro.set_device(&self.x_axis_path, &self.y_axis_path, &self.z_axis_path)  retuns empty string, then return false else true
 

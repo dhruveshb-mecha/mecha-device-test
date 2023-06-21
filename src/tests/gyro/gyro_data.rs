@@ -22,7 +22,13 @@ impl TestAssertion for GyroData {
         };
         log_message(Device::Motion, MessageType::Info, "Getting Gyro Data");
 
-        let (x_raw, y_raw, z_raw) = gyro.get_data().unwrap();
+        gyro.set_device(&self.x_axis_path, &self.y_axis_path, &self.z_axis_path);
+
+        print!("x axis path : {}", gyro.x_axis);
+        print!("y axis path : {}", gyro.y_axis);
+        print!("z axis path : {}", gyro.z_axis);
+
+        let (x_raw, y_raw, z_raw) = gyro.get_data()?;
 
         //printx,y,z values in log message
         log_message(
@@ -40,7 +46,7 @@ impl TestAssertion for GyroData {
         //sleep for 5 seconds
         std::thread::sleep(std::time::Duration::from_secs(5));
 
-        let (x_raw, y_raw, z_raw) = gyro.get_data().unwrap();
+        let (x_raw, y_raw, z_raw) = gyro.get_data()?;
 
         //printx,y,z values in log message
         log_message(
