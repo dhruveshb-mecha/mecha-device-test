@@ -7,6 +7,7 @@ mod base_cli;
 use base_cli::DeviceConfig;
 use clap::{Parser, Subcommand};
 
+use mecha_mic::AudioInterface;
 use test_base::{TestAssertion, TestRunner};
 use tests::battery::battery_charging::BatteryCharging;
 use tests::battery::battery_detect::BatteryDetect;
@@ -15,6 +16,8 @@ use tests::display::display_brightness::DisplayBrightness;
 use tests::display::display_detect::DisplayDetect;
 use tests::gyro::gyro_data::GyroData;
 use tests::gyro::gyro_detect::GyroDetect;
+use tests::mic::audio_playback::AudioPlayBack;
+use tests::mic::audio_record::AudioRecord;
 
 mod test_base;
 
@@ -143,6 +146,8 @@ fn main() {
                         z_axis_path: device_config.interfaces.gyroscope.z_axis.clone(),
                     }),
                 ),
+                ("audio", Box::new(AudioRecord)),
+                ("audio", Box::new(AudioPlayBack)),
                 // ("camera", Box::new(CameraImageCapture)),
                 // we can add all test case over here.
                 // (

@@ -1,7 +1,7 @@
 use crate::test_base::{log_message, Device, MessageType, TestAssertion};
 use mecha_mic::{arecord::MechaAudio, AudioInterface};
 
-struct AudioRecord;
+pub struct AudioRecord;
 
 impl TestAssertion for AudioRecord {
     fn describe(&self) -> &str {
