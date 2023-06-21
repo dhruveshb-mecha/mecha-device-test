@@ -8,8 +8,6 @@ impl TestAssertion for PWM {
     }
 
     fn test(&self) -> anyhow::Result<bool> {
-        mecha_pwm::pwm_device(1000000, 500000)?;
-
         log_message(Device::Pwm, MessageType::Test, "Pwm Test Started");
 
         question_prompt(
@@ -17,6 +15,8 @@ impl TestAssertion for PWM {
             MessageType::Confirm,
             "Have you added pwm to device ?".to_string(),
         );
+
+        mecha_pwm::pwm_device(1000000, 500000)?;
 
         // if user answer yes, then test passed otherwise failed
         let result = question_prompt(
