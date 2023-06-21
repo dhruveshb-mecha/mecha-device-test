@@ -18,4 +18,5 @@ mecha-power-supply = { path = "mecha-device-sdk/mecha-power-supply" }
 mecha-gyro = { path = "mecha-device-sdk/mecha-gyro" }
 mecha-mic = { path = "mecha-device-sdk/mecha-mic" }
 mecha-led = { path = "mecha-device-sdk/mecha-led" }
+mecha-pwm = { path = "mecha-device-sdk/mecha-pwm" }
 # display ={ path = "device-sdk/display"}

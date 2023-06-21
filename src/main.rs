@@ -19,6 +19,7 @@ use tests::gyro::gyro_detect::GyroDetect;
 use tests::led::{led_color_test, led_detect};
 use tests::mic::audio_playback::AudioPlayBack;
 use tests::mic::audio_record::AudioRecord;
+use tests::pwm::pwm_blink_led::PWM;
 
 mod test_base;
 
@@ -49,6 +50,10 @@ mod tests {
     pub mod led {
         pub mod led_color_test;
         pub mod led_detect;
+    }
+
+    pub mod pwm {
+        pub mod pwm_blink_led;
     }
 }
 
@@ -170,6 +175,8 @@ fn main() {
                         blue: device_config.interfaces.led.blue_led.clone(),
                     }),
                 ),
+                //pwm test case
+                ("pwm", Box::new(PWM)),
                 // ("camera", Box::new(CameraImageCapture)),
                 // we can add all test case over here.
                 // (
