@@ -24,10 +24,6 @@ impl TestAssertion for GyroData {
 
         gyro.set_device(&self.x_axis_path, &self.y_axis_path, &self.z_axis_path);
 
-        print!("x axis path : {}", gyro.x_axis);
-        print!("y axis path : {}", gyro.y_axis);
-        print!("z axis path : {}", gyro.z_axis);
-
         let (x_raw, y_raw, z_raw) = gyro.get_data()?;
 
         //printx,y,z values in log message
