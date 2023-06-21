@@ -57,6 +57,7 @@ pub enum Device {
     Display,
     Motion,
     Battery,
+    Led,
     Audio,
     Camera, // Add more devices as needed
 }

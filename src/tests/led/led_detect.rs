@@ -1,6 +1,6 @@
 use mecha_led::{Led, LedColor, LedInterface};
 
-use crate::test_base::TestAssertion;
+use crate::test_base::{log_message, Device, MessageType, TestAssertion};
 
 pub struct LedDetect {
     pub red: String,
@@ -15,24 +15,28 @@ impl TestAssertion for LedDetect {
 
     fn test(&self) -> anyhow::Result<bool> {
         let mut led = Led {
-            red: String::new(),
-            green: String::new(),
-            blue: String::new(),
+            red: self.red.clone(),
+            green: self.green.clone(),
+            blue: self.blue.clone(),
         };
 
-        let _red_led = led.set_device(LedColor::Red, 1);
-        let _green_led = led.set_device(LedColor::Green, 1);
-        let _blue_led = led.set_device(LedColor::Blue, 1);
+        log_message(Device::Led, MessageType::Test, "Led Detection Test");
+        log_message(
+            Device::Led,
+            MessageType::Action,
+            "Setting all LED values to zero",
+        );
+        // Set all LED values to zero
+        led.set_device(LedColor::Red, 0)?;
+        led.set_device(LedColor::Green, 0)?;
+        led.set_device(LedColor::Blue, 0)?;
 
-        // if the values of red, green and blue are 1, then return true else false
-
-        if led.get_device(LedColor::Red).unwrap() == 1
-            && led.get_device(LedColor::Green).unwrap() == 1
-            && led.get_device(LedColor::Blue).unwrap() == 1
-        {
-            return Ok(true);
+        // Get LED values and verify if they are all zero
+        let (red_value, green_value, blue_value) = led.info()?;
+        if red_value == 0 && green_value == 0 && blue_value == 0 {
+            Ok(true) // Test passed
         } else {
-            return Ok(false);
+            Ok(false) // Test failed
         }
     }
 }
