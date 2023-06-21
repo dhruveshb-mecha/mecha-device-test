@@ -11,6 +11,7 @@ pub struct Interfaces {
     pub display: Display,
     pub battery: Battery,
     pub gyroscope: Gyroscope,
+    pub led: Led,
 }
 
 #[derive(Debug, Deserialize, Serialize, Default)]
@@ -30,4 +31,11 @@ pub struct Gyroscope {
     pub x_axis: String,
     pub y_axis: String,
     pub z_axis: String,
+}
+
+#[derive(Debug, Deserialize, Serialize, Default)]
+pub struct Led {
+    pub red_led: String,
+    pub green_led: String,
+    pub blue_led: String,
 }

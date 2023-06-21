@@ -16,6 +16,7 @@ use tests::display::display_brightness::DisplayBrightness;
 use tests::display::display_detect::DisplayDetect;
 use tests::gyro::gyro_data::GyroData;
 use tests::gyro::gyro_detect::GyroDetect;
+use tests::led::led_detect;
 use tests::mic::audio_playback::AudioPlayBack;
 use tests::mic::audio_record::AudioRecord;
 
@@ -43,6 +44,10 @@ mod tests {
     pub mod mic {
         pub mod audio_playback;
         pub mod audio_record;
+    }
+
+    pub mod led {
+        pub mod led_detect;
     }
 }
 
@@ -148,6 +153,14 @@ fn main() {
                 ),
                 ("audio", Box::new(AudioRecord)),
                 ("audio", Box::new(AudioPlayBack)),
+                (
+                    "led",
+                    Box::new(led_detect::LedDetect {
+                        red: device_config.interfaces.led.red_led.clone(),
+                        green: device_config.interfaces.led.green_led.clone(),
+                        blue: device_config.interfaces.led.blue_led.clone(),
+                    }),
+                ),
                 // ("camera", Box::new(CameraImageCapture)),
                 // we can add all test case over here.
                 // (
