@@ -22,13 +22,13 @@ impl TestAssertion for GyroData {
         };
         log_message(Device::Motion, MessageType::Info, "Getting Gyro Data");
 
-        // let (x, y, z) = gyro.get_data().unwrap();
+        let (x_raw, y_raw, z_raw) = gyro.get_data().unwrap();
 
         //printx,y,z values in log message
         log_message(
             Device::Motion,
             MessageType::Info,
-            &format!("x : {}, y : {}, z : {} ", 5, 10, 15),
+            &format!("x : {}, y : {}, z : {} ", x_raw, y_raw, z_raw),
         );
 
         log_message(
@@ -40,11 +40,13 @@ impl TestAssertion for GyroData {
         //sleep for 5 seconds
         std::thread::sleep(std::time::Duration::from_secs(5));
 
-        // let (x, y, z) = gyro.get_data().unwrap();
+        let (x_raw, y_raw, z_raw) = gyro.get_data().unwrap();
+
+        //printx,y,z values in log message
         log_message(
             Device::Motion,
             MessageType::Info,
-            &format!("x : {}, y : {}, z : {} ", 15, 20, 25),
+            &format!("x : {}, y : {}, z : {} ", x_raw, y_raw, z_raw),
         );
 
         let user_response = question_prompt(
