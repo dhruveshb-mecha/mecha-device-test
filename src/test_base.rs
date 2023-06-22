@@ -60,6 +60,7 @@ pub enum Device {
     Led,
     Audio,
     Pwm,
+    Adc,
     Camera, // Add more devices as needed
 }
 #[derive(Debug, Clone, Copy)]

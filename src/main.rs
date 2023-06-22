@@ -9,6 +9,7 @@ use clap::{Parser, Subcommand};
 
 use mecha_mic::AudioInterface;
 use test_base::{TestAssertion, TestRunner};
+use tests::adc::adc_data::AdcTest;
 use tests::battery::battery_charging::BatteryCharging;
 use tests::battery::battery_detect::BatteryDetect;
 // use tests::camera::capture_image::CameraImageCapture;
@@ -54,6 +55,10 @@ mod tests {
 
     pub mod pwm {
         pub mod pwm_blink_led;
+    }
+
+    pub mod adc {
+        pub mod adc_data;
     }
 }
 
@@ -177,6 +182,15 @@ fn main() {
                 ),
                 //pwm test case
                 ("pwm", Box::new(PWM)),
+                //adc test case
+                (
+                    "adc",
+                    Box::new(AdcTest {
+                        channel_1_path: device_config.interfaces.adc.channel_1,
+                        channel_2_path: device_config.interfaces.adc.channel_2,
+                        sampling_frequency: device_config.interfaces.adc.sampling_frequency,
+                    }),
+                ),
                 // ("camera", Box::new(CameraImageCapture)),
                 // we can add all test case over here.
                 // (
