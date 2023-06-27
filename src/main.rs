@@ -12,6 +12,7 @@ use test_base::{TestAssertion, TestRunner};
 use tests::adc::adc_data::AdcTest;
 use tests::battery::battery_charging::BatteryCharging;
 use tests::battery::battery_detect::BatteryDetect;
+use tests::cpu::cpu_stress_test::CpuStressTest;
 // use tests::camera::capture_image::CameraImageCapture;
 use tests::display::display_brightness::DisplayBrightness;
 use tests::display::display_detect::DisplayDetect;
@@ -59,6 +60,11 @@ mod tests {
 
     pub mod adc {
         pub mod adc_data;
+    }
+
+    pub mod cpu {
+        pub mod cpu_stress_test;
+        // pub mod cpu_temp;
     }
 }
 
@@ -191,6 +197,7 @@ fn main() {
                         sampling_frequency: device_config.interfaces.adc.sampling_frequency,
                     }),
                 ),
+                ("cpu", Box::new(CpuStressTest)),
                 // ("camera", Box::new(CameraImageCapture)),
                 // we can add all test case over here.
                 // (
@@ -215,6 +222,24 @@ fn main() {
                 }
                 "led" => {
                     suit = filter_test_cases(test_cases, "led");
+                }
+                "battery" => {
+                    suit = filter_test_cases(test_cases, "battery");
+                }
+                "gyro" => {
+                    suit = filter_test_cases(test_cases, "gyro");
+                }
+                "audio" => {
+                    suit = filter_test_cases(test_cases, "audio");
+                }
+                "pwm" => {
+                    suit = filter_test_cases(test_cases, "pwm");
+                }
+                "adc" => {
+                    suit = filter_test_cases(test_cases, "adc");
+                }
+                "cpu" => {
+                    suit = filter_test_cases(test_cases, "cpu");
                 }
                 _ => panic!("Invalid coverage: {}", coverage),
             }
