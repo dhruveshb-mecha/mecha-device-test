@@ -62,6 +62,7 @@ pub enum Device {
     Pwm,
     Adc,
     Cpu,
+    TrustIc,
     Camera, // Add more devices as needed
 }
 #[derive(Debug, Clone, Copy)]

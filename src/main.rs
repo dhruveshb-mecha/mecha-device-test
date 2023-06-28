@@ -22,6 +22,7 @@ use tests::led::{led_color_test, led_detect};
 use tests::mic::audio_playback::AudioPlayBack;
 use tests::mic::audio_record::AudioRecord;
 use tests::pwm::pwm_blink_led::PWM;
+use tests::trust_ic::detect_trust_ic::TrustIcDetectionTest;
 
 mod test_base;
 
@@ -65,6 +66,10 @@ mod tests {
     pub mod cpu {
         pub mod cpu_stress_test;
         // pub mod cpu_temp;
+    }
+
+    pub mod trust_ic {
+        pub mod detect_trust_ic;
     }
 }
 
@@ -198,6 +203,7 @@ fn main() {
                     }),
                 ),
                 ("cpu", Box::new(CpuStressTest)),
+                ("trust_ic", Box::new(TrustIcDetectionTest)),
                 // ("camera", Box::new(CameraImageCapture)),
                 // we can add all test case over here.
                 // (
@@ -240,6 +246,9 @@ fn main() {
                 }
                 "cpu" => {
                     suit = filter_test_cases(test_cases, "cpu");
+                }
+                "trust_ic" => {
+                    suit = filter_test_cases(test_cases, "trust_ic");
                 }
                 _ => panic!("Invalid coverage: {}", coverage),
             }

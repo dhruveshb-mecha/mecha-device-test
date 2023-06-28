@@ -21,4 +21,5 @@ mecha-led = { path = "mecha-device-sdk/mecha-led" }
 mecha-pwm = { path = "mecha-device-sdk/mecha-pwm" }
 mecha-adc = { path = "mecha-device-sdk/mecha-adc" }
 mecha-cpu = { path = "mecha-device-sdk/mecha-cpu" }
+mecha-trust-ic = { path = "mecha-device-sdk/mecha-trust-ic" }
 # display ={ path = "device-sdk/display"}
