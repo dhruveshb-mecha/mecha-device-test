@@ -147,13 +147,13 @@ fn main() {
                 (
                     "battery",
                     Box::new(BatteryDetect {
-                        device: device_config.interfaces.display.device.clone(),
+                        device: device_config.interfaces.battery.device.clone(),
                     }),
                 ),
                 (
                     "battery",
                     Box::new(BatteryCharging {
-                        device: device_config.interfaces.display.device.clone(),
+                        device: device_config.interfaces.battery.device.clone(),
                     }),
                 ),
                 // add gyro test cases over here

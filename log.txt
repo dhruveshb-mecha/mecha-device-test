@@ -1,0 +1,77 @@
+[Display] Action: Detecting Display
+[Display] Info: Display Detected
+[Display] Action: Setting Display Device
+[Display] Action: Setting Display Brightness
+[Display] Error: Failed to set display brightness: No such file or directory (os error 2)
+[Battery] Action: Setting Battery Device
+[Battery] Action: Please plug-in the charger in 5 seconds to continue
+[Battery] Action: Battery Discharging
+[Battery] Action: Please unplug the charger in 5 seconds to continue
+[Battery] Action: Battery Discharging
+[Motion] Action: Setting Gyro Device
+[Motion] Pass: Gyro Device Set
+[Motion] Info: Getting Gyro Data
+[Battery] Action: Setting Battery Device
+[Battery] Action: Please plug-in the charger in 5 seconds to continue
+[Battery] Action: Battery Discharging
+[Battery] Action: Please unplug the charger in 5 seconds to continue
+[Battery] Action: Battery Discharging
+[Pwm] Test: Pwm Test Started
+[Pwm] Test: Pwm Test Started
+[Pwm] Test: Pwm Test Started
+[Adc] Test: Adc Test Started
+[Adc] Info: Please attach the ADC device.
+[Adc] Info: Please attach the ADC device in 5 seconds.
+[Adc] Test: Adc Test Failed
+[Motion] Action: Setting Gyro Device
+[Motion] Pass: Gyro Device Set
+[Motion] Info: Getting Gyro Data
+[Motion] Action: Setting Gyro Device
+[Motion] Pass: Gyro Device Set
+[Motion] Info: Getting Gyro Data
+[Motion] Info: Getting Gyro Data v1
+[Motion] Action: Setting Gyro Device
+[Motion] Pass: Gyro Device Set
+[Motion] Info: Getting Gyro Data
+[Motion] Fail: Unable to get Gyro Data
+[Adc] Test: Adc Test Started
+[Adc] Info: Please attach the ADC device.
+[Adc] Info: Please attach the ADC device in 5 seconds.
+[Adc] Test: Adc Test Failed
+[Led] Test: Led Detection Test
+[Led] Action: Setting all LED values to zero
+[Led] Test: Led Detection Test
+[Led] Action: Setting all LED values to zero
+[Led] Test: Led Detection Test
+[Led] Action: Setting all LED values to zero
+[Led] Fail: Unable to set LED values
+[Led] Test: Led Detection Test
+[Led] Action: Setting all LED values to zero
+[Led] Fail: Unable to set LED values
+[Led] Test: Led Detection Test
+[Led] Action: Setting all LED values to zero
+[Led] Fail: Unable to set LED values
+[Led] Fail: Unable to set LED values
+[Led] Test: Led Detection Test
+[Led] Action: Setting all LED values to zero
+[Led] Fail: Unable to set LED values
+[Led] Fail: Unable to set Red LED values
+[Led] Test: Led Detection Test
+[Led] Action: Setting all LED values to zero
+[Led] Fail: Unable to set LED values
+[Led] Fail: Unable to set Red LED values
+[Led] Test: Led Detection Test
+[Led] Action: Setting all LED values to zero
+[Led] Fail: Unable to set LED values
+[Led] Fail: Unable to set Red LED values
+[Battery] Action: Setting Battery Device
+[Battery] Action: Please plug-in the charger in 5 seconds to continue
+[Battery] Action: Battery Discharging
+[Battery] Action: Please unplug the charger in 5 seconds to continue
+[Battery] Action: Battery Discharging
+[Motion] Action: Setting Gyro Device
+[Motion] Pass: Gyro Device Set
+[Motion] Info: Getting Gyro Data
+[Motion] Fail: Unable to get Gyro Data
+[TrustIc] Info: Detecting Trust IC
+[TrustIc] Info: Detecting Trust IC

@@ -17,7 +17,7 @@ impl TestAssertion for BatteryDetect {
         };
 
         // will be replaced with actual behavior using SDK
-        battery.set_device("/sys/class/power_supply/bq27441-0/uevent");
+        battery.set_device(self.device.as_str());
 
         let baattery_path = battery.get_device();
 

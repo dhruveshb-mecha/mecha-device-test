@@ -13,6 +13,9 @@ impl TestAssertion for TrustIcDetectionTest {
         let trust_ic = TrustIc;
 
         log_message(Device::TrustIc, MessageType::Info, "Detecting Trust IC");
+
+        // get chip info if it returns error then log message as fail or else get chip info
+
         let chip_info = trust_ic.chip_info()?;
 
         // if chip info is empty, then the test failed else it passed on fail log the error

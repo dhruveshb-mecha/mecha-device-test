@@ -22,16 +22,25 @@ impl TestAssertion for GyroData {
         };
         log_message(Device::Motion, MessageType::Info, "Getting Gyro Data");
 
+        //if unable to set device then log message as fail or else set device
+
         gyro.set_device(&self.x_axis_path, &self.y_axis_path, &self.z_axis_path);
 
-        let (x_raw, y_raw, z_raw) = gyro.get_data()?;
+        // if get data returns error then log message as fail or else get data
 
-        //printx,y,z values in log message
-        log_message(
-            Device::Motion,
-            MessageType::Info,
-            &format!("x : {}, y : {}, z : {} ", x_raw, y_raw, z_raw),
-        );
+        if gyro.get_data().is_err() {
+            log_message(Device::Motion, MessageType::Fail, "Unable to get Gyro Data");
+            return Ok(false);
+        } else {
+            let (x_raw, y_raw, z_raw) = gyro.get_data()?;
+
+            //printx,y,z values in log message
+            log_message(
+                Device::Motion,
+                MessageType::Info,
+                &format!("x : {}, y : {}, z : {} ", x_raw, y_raw, z_raw),
+            );
+        }
 
         log_message(
             Device::Motion,

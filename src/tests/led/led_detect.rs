@@ -27,16 +27,27 @@ impl TestAssertion for LedDetect {
             "Setting all LED values to zero",
         );
         // Set all LED values to zero
-        led.set_device(LedColor::Red, 0)?;
-        led.set_device(LedColor::Green, 0)?;
-        led.set_device(LedColor::Blue, 0)?;
 
-        // Get LED values and verify if they are all zero
-        let (red_value, green_value, blue_value) = led.info()?;
-        if red_value == 0 && green_value == 0 && blue_value == 0 {
-            Ok(true) // Test passed
+        //if we can not set led values then log message as fail or else set led values
+        if led.set_device(LedColor::Red, 0).is_err()
+            || led.set_device(LedColor::Green, 0).is_err()
+            || led.set_device(LedColor::Blue, 0).is_err()
+        {
+            log_message(Device::Led, MessageType::Fail, "Unable to set LED values");
+            return Ok(false);
         } else {
-            Ok(false) // Test failed
+            log_message(Device::Led, MessageType::Pass, "LED values set to zero");
+            led.set_device(LedColor::Red, 0)?;
+            led.set_device(LedColor::Green, 0)?;
+            led.set_device(LedColor::Blue, 0)?;
+
+            // Get LED values and verify if they are all zero
+            let (red_value, green_value, blue_value) = led.info()?;
+            if red_value == 0 && green_value == 0 && blue_value == 0 {
+                Ok(true) // Test passed
+            } else {
+                Ok(false) // Test failed
+            }
         }
     }
 }
