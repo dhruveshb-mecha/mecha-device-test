@@ -11,6 +11,8 @@ impl TestAssertion for TrustIcDetectionTest {
 
     fn test(&self) -> anyhow::Result<bool> {
         let trust_ic = TrustIc;
+
+        log_message(Device::TrustIc, MessageType::Info, "Detecting Trust IC");
         let chip_info = trust_ic.chip_info()?;
 
         // if chip info is empty, then the test failed else it passed on fail log the error
@@ -22,7 +24,7 @@ impl TestAssertion for TrustIcDetectionTest {
             );
             Ok(false)
         } else {
-            log_message(Device::TrustIc, MessageType::Info, "Trust IC detected");
+            log_message(Device::TrustIc, MessageType::Pass, "Trust IC detected");
             Ok(true)
         }
     }
