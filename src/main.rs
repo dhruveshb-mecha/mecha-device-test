@@ -21,6 +21,11 @@ use tests::gyro::gyro_detect::GyroDetect;
 use tests::led::{led_color_test, led_detect};
 use tests::mic::audio_playback::AudioPlayBack;
 use tests::mic::audio_record::AudioRecord;
+use tests::powertests::power_test1::{self, PowerTest1};
+use tests::powertests::power_test2::PowerTest2;
+use tests::powertests::power_test3::PowerTest3;
+use tests::powertests::power_test4::PowerTest4;
+use tests::powertests::power_test5::PowerTest5;
 use tests::pwm::pwm_blink_led::PWM;
 use tests::trust_ic::detect_trust_ic::TrustIcDetectionTest;
 
@@ -71,6 +76,13 @@ mod tests {
     pub mod trust_ic {
         pub mod detect_trust_ic;
     }
+    pub mod powertests {
+        pub mod power_test1;
+        pub mod power_test2;
+        pub mod power_test3;
+        pub mod power_test4;
+        pub mod power_test5;
+    }
 }
 
 /// A fictional versioning CLI
@@ -86,7 +98,7 @@ const DEFAULT_COVERAGE: &str = "all";
 
 #[derive(Debug, Subcommand)]
 enum Commands {
-    /// Clones repos
+    /// test for mecha device
     #[command(arg_required_else_help = true)]
     Test {
         ///  tests to run, if not specified defaults to all
@@ -204,6 +216,41 @@ fn main() {
                 ),
                 ("cpu", Box::new(CpuStressTest)),
                 ("trust_ic", Box::new(TrustIcDetectionTest)),
+                (
+                    "power_test_1",
+                    Box::new(PowerTest1 {
+                        display_path: device_config.interfaces.display.device.clone(),
+                        camera_path: device_config.interfaces.camera.device.clone(),
+                    }),
+                ),
+                (
+                    "power_test_2",
+                    Box::new(PowerTest2 {
+                        display_path: device_config.interfaces.display.device.clone(),
+                        camera_path: device_config.interfaces.camera.device.clone(),
+                    }),
+                ),
+                (
+                    "power_test_3",
+                    Box::new(PowerTest3 {
+                        display_path: device_config.interfaces.display.device.clone(),
+                        camera_path: device_config.interfaces.camera.device.clone(),
+                    }),
+                ),
+                (
+                    "power_test_4",
+                    Box::new(PowerTest4 {
+                        display_path: device_config.interfaces.display.device.clone(),
+                        camera_path: device_config.interfaces.camera.device.clone(),
+                    }),
+                ),
+                (
+                    "power_test_5",
+                    Box::new(PowerTest5 {
+                        display_path: device_config.interfaces.display.device.clone(),
+                        camera_path: device_config.interfaces.camera.device.clone(),
+                    }),
+                ),
                 // ("camera", Box::new(CameraImageCapture)),
                 // we can add all test case over here.
                 // (
@@ -220,6 +267,7 @@ fn main() {
                 "all" => {
                     suit = test_cases
                         .into_iter()
+                        .filter(|(param, _)| !param.starts_with("powertest_"))
                         .map(|(_, assertion)| assertion)
                         .collect();
                 }
@@ -249,6 +297,11 @@ fn main() {
                 }
                 "trust_ic" => {
                     suit = filter_test_cases(test_cases, "trust_ic");
+                }
+                _ if coverage.starts_with("powertest") => {
+                    let powertest_name = coverage.strip_prefix("powertest").unwrap();
+                    let power_tetcase_name = format!("power_test_{}", powertest_name);
+                    suit = filter_test_cases(test_cases, &power_tetcase_name);
                 }
                 _ => panic!("Invalid coverage: {}", coverage),
             }

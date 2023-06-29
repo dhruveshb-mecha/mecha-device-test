@@ -13,6 +13,7 @@ pub struct Interfaces {
     pub gyroscope: Gyroscope,
     pub led: Led,
     pub adc: Adc,
+    pub camera: Camera,
 }
 
 #[derive(Debug, Deserialize, Serialize, Default)]
@@ -46,4 +47,9 @@ pub struct Adc {
     pub channel_1: String,
     pub channel_2: String,
     pub sampling_frequency: String,
+}
+
+#[derive(Debug, Deserialize, Serialize, Default)]
+pub struct Camera {
+    pub device: String,
 }

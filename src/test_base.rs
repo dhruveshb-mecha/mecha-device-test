@@ -63,6 +63,7 @@ pub enum Device {
     Adc,
     Cpu,
     TrustIc,
+    Power,  //this is not any devide but a test case that will test the power test
     Camera, // Add more devices as needed
 }
 #[derive(Debug, Clone, Copy)]
