@@ -5,12 +5,14 @@ use std::{
 };
 
 use mecha_display::{Display, DisplayInterface};
+use mecha_power_supply::{Battery, PowerSupplyInfo};
 
 use crate::test_base::{log_message, question_prompt, Device, MessageType, TestAssertion};
 
 pub struct PowerTest3 {
     pub display_path: String,
     pub camera_path: String,
+    pub current_now: String,
 }
 
 fn execute_gstreamer_command() {
@@ -121,6 +123,24 @@ impl TestAssertion for PowerTest3 {
         );
 
         execute_gstreamer_command();
+
+        log_message(
+            Device::Power,
+            MessageType::Action,
+            "Waiting for 15 seconds to check power consumption",
+        );
+
+        let battery = Battery {
+            path: String::new(),
+            currnet_now: self.current_now.clone(),
+        };
+
+        let current_now = battery.get_current()?;
+        log_message(
+            Device::Power,
+            MessageType::Info,
+            &format!("Current Now: {}", current_now),
+        );
 
         Ok(true)
     }
