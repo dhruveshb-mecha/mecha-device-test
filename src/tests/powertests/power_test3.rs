@@ -61,15 +61,34 @@ impl TestAssertion for PowerTest3 {
         log_message(
             Device::Power,
             MessageType::Action,
-            "Setting Display Brightness to 0",
+            "Setting Display Brightness to 80%",
         );
 
         let mut display = Display {
             path: String::new(),
         };
 
+        // Set the display path.
         display.set_device(&self.display_path);
-        display.set_brightness(0)?;
+
+        // Check if the display path is empty after calling set_device.
+        if display.path.is_empty() {
+            log_message(
+                Device::Power,
+                MessageType::Error,
+                &format!("Unable to find display"),
+            );
+            return Ok(false);
+        }
+
+        if let Err(err) = display.set_brightness(204) {
+            log_message(
+                Device::Power,
+                MessageType::Error,
+                &format!("Failed to set display brightness: {}", err),
+            );
+            return Ok(false);
+        }
 
         log_message(Device::Power, MessageType::Info, "Camera - Off");
         log_message(Device::Power, MessageType::Info, "Audio - Off");
