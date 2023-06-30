@@ -229,6 +229,7 @@ fn main() {
                     Box::new(PowerTest2 {
                         display_path: device_config.interfaces.display.device.clone(),
                         camera_path: device_config.interfaces.camera.device.clone(),
+                        current_now: device_config.interfaces.battery.current.clone(),
                     }),
                 ),
                 (

@@ -1,10 +1,12 @@
 use mecha_display::{Display, DisplayInterface};
+use mecha_power_supply::{Battery, PowerSupplyInfo};
 
 use crate::test_base::{log_message, question_prompt, Device, MessageType, TestAssertion};
 
 pub struct PowerTest2 {
     pub display_path: String,
     pub camera_path: String,
+    pub current_now: String,
 }
 
 impl TestAssertion for PowerTest2 {
@@ -13,27 +15,46 @@ impl TestAssertion for PowerTest2 {
     }
 
     fn test(&self) -> anyhow::Result<bool> {
-        log_message(Device::Power, MessageType::Test, "Power Test 2 Started");
+        log_message(Device::Power, MessageType::Test, "Power Test 2 Basic");
 
         log_message(Device::Power, MessageType::Info, "Printing Test Conditions");
 
         log_message(
             Device::Power,
             MessageType::Action,
-            "Setting Display Brightness to 0",
+            "Setting Display Brightness to 80%",
         );
 
         let mut display = Display {
             path: String::new(),
         };
 
+        // Set the display path.
         display.set_device(&self.display_path);
-        display.set_brightness(0)?;
+
+        // Check if the display path is empty after calling set_device.
+        if display.path.is_empty() {
+            log_message(
+                Device::Power,
+                MessageType::Error,
+                &format!("Unable to find display"),
+            );
+            return Ok(false);
+        }
+
+        if let Err(err) = display.set_brightness(204) {
+            log_message(
+                Device::Power,
+                MessageType::Error,
+                &format!("Failed to set display brightness: {}", err),
+            );
+            return Ok(false);
+        }
 
         log_message(Device::Power, MessageType::Info, "Camera - Off");
         log_message(Device::Power, MessageType::Info, "Audio - Off");
 
-        //ask user that battery is charging or not based on that log info message that battery is charging or not
+        // Ask user whether the battery is charging or not.
         let user_response = question_prompt(
             Device::Power,
             MessageType::Confirm,
@@ -53,6 +74,24 @@ impl TestAssertion for PowerTest2 {
             "Waiting for 15 seconds to check power consumption",
         );
 
+        std::thread::sleep(std::time::Duration::from_secs(15));
+
+        let battery = Battery {
+            path: String::new(),
+            currnet_now: self.current_now.clone(),
+        };
+
+        let currnet = battery.get_current()?;
+
+        // the current value will be six digit number we need to convert it to mA
+        let current = currnet / 1000;
+
+        // Print the value for current from the battery.
+        log_message(
+            Device::Power,
+            MessageType::Info,
+            &format!("Current: {} mA", current),
+        );
         Ok(true)
     }
 }
