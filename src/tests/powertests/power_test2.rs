@@ -81,16 +81,29 @@ impl TestAssertion for PowerTest2 {
             currnet_now: self.current_now.clone(),
         };
 
-        let currnet = battery.get_current()?;
+        let mut total_current = 0;
+        let num_readings = 5;
 
-        // the current value will be six digit number we need to convert it to mA
-        let current = currnet / 1000;
+        for _ in 0..num_readings {
+            std::thread::sleep(std::time::Duration::from_secs(3)); // Sleep for 3 seconds for each reading
+
+            let battery = Battery {
+                path: String::new(),
+                currnet_now: self.current_now.clone(),
+            };
+
+            let current = battery.get_current()?; // Get the current reading
+
+            total_current += current;
+        }
+
+        let average_current = total_current / num_readings;
 
         // Print the value for current from the battery.
         log_message(
             Device::Power,
             MessageType::Info,
-            &format!("Current: {} mA", current),
+            &format!("Current: {} mA", average_current / 1000),
         );
         Ok(true)
     }
