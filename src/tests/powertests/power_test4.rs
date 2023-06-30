@@ -49,9 +49,11 @@ fn play_audio(file_path: String) {
 
     match command {
         Ok(mut child) => {
-            // Wait for the audio playback to finish.
+            // Wait for 15 seconds before terminating the audio playback.
             thread::sleep(Duration::from_secs(15));
-            let _ = child.wait();
+
+            // Terminate the audio playback.
+            child.kill().expect("Failed to kill the audio playback.");
         }
         Err(e) => {
             eprintln!("Failed to execute aplay command: {}", e);
