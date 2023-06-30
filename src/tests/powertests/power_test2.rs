@@ -74,8 +74,6 @@ impl TestAssertion for PowerTest2 {
             "Waiting for 15 seconds to check power consumption",
         );
 
-        std::thread::sleep(std::time::Duration::from_secs(15));
-
         let battery = Battery {
             path: String::new(),
             currnet_now: self.current_now.clone(),
