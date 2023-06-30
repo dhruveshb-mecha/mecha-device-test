@@ -1,9 +1,3 @@
-// pub struct PowerTestBase {
-//     // omitted
-//     display_path: String,
-//     camera_path: String,
-// }
-
 pub fn camera_preview() {
     let command = Command::new("gst-launch-1.0")
         .arg("v4l2src")

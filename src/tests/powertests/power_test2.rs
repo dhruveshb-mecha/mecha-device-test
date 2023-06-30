@@ -85,11 +85,6 @@ impl TestAssertion for PowerTest2 {
         for _ in 0..num_readings {
             std::thread::sleep(std::time::Duration::from_secs(3)); // Sleep for 3 seconds for each reading
 
-            let battery = Battery {
-                path: String::new(),
-                currnet_now: self.current_now.clone(),
-            };
-
             let current = battery.get_current()?; // Get the current reading
 
             total_current += current;

@@ -131,7 +131,6 @@ impl TestAssertion for PowerTest4 {
         let camera_thread = thread::spawn(camera_preview);
 
         let audio_path = self.audio_path.clone();
-        print!("audio path is {}", audio_path);
         //spawn a separate thread to run the audio
         let audio_thread = thread::spawn(|| play_audio(audio_path));
 

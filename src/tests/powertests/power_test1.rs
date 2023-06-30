@@ -76,7 +76,7 @@ impl TestAssertion for PowerTest1 {
 
         std::thread::sleep(std::time::Duration::from_secs(15));
 
-        let mut battery = Battery {
+        let battery = Battery {
             path: String::new(),
             currnet_now: self.current_now.clone(),
         };
