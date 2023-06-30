@@ -14,6 +14,7 @@ pub struct Interfaces {
     pub led: Led,
     pub adc: Adc,
     pub camera: Camera,
+    pub audio: Audio,
 }
 
 #[derive(Debug, Deserialize, Serialize, Default)]
@@ -53,4 +54,9 @@ pub struct Adc {
 #[derive(Debug, Deserialize, Serialize, Default)]
 pub struct Camera {
     pub device: String,
+}
+
+#[derive(Debug, Deserialize, Serialize, Default)]
+pub struct Audio {
+    pub audio_file: String,
 }

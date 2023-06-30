@@ -9,13 +9,7 @@ use mecha_power_supply::{Battery, PowerSupplyInfo};
 
 use crate::test_base::{log_message, question_prompt, Device, MessageType, TestAssertion};
 
-pub struct PowerTest3 {
-    pub display_path: String,
-    pub camera_path: String,
-    pub current_now: String,
-}
-
-fn execute_gstreamer_command() {
+pub fn camera_preview() {
     let command = Command::new("gst-launch-1.0")
         .arg("v4l2src")
         .arg("device=/dev/video0")
@@ -48,6 +42,12 @@ fn execute_gstreamer_command() {
             exit(1);
         }
     }
+}
+
+pub struct PowerTest3 {
+    pub display_path: String,
+    pub camera_path: String,
+    pub current_now: String,
 }
 
 impl TestAssertion for PowerTest3 {
@@ -109,7 +109,7 @@ impl TestAssertion for PowerTest3 {
         }
 
         // Spawn a separate thread to run the GStreamer command for camera preview.
-        let camera_thread = thread::spawn(execute_gstreamer_command);
+        let camera_thread = thread::spawn(camera_preview);
 
         // Get the current measurements while the camera preview is running.
         let mut total_current = 0;
