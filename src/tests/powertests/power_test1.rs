@@ -13,7 +13,7 @@ impl TestAssertion for PowerTest1 {
     }
 
     fn test(&self) -> anyhow::Result<bool> {
-        log_message(Device::Power, MessageType::Test, "Power Test 1 Started");
+        log_message(Device::Power, MessageType::Test, "Power Test 1: Minimal");
 
         log_message(Device::Power, MessageType::Info, "Printing Test Conditions");
 
@@ -23,35 +23,56 @@ impl TestAssertion for PowerTest1 {
             "Setting Display Brightness to 0",
         );
 
-        // let mut display = Display {
-        //     path: String::new(),
-        // };
+        let mut display = Display {
+            path: String::new(),
+        };
 
-        // display.set_device(&self.display_path);
-        // display.set_brightness(0)?;
+        // Set the display path.
+        display.set_device(&self.display_path);
 
-        // log_message(Device::Power, MessageType::Info, "Camera - Off");
-        // log_message(Device::Power, MessageType::Info, "Audio - Off");
+        // Check if the display path is empty after calling set_device.
+        if display.path.is_empty() {
+            log_message(
+                Device::Power,
+                MessageType::Error,
+                &format!("Unable to find display"),
+            );
+            return Ok(false);
+        }
 
-        // //ask user that battery is charging or not based on that log info message that battery is charging or not
-        // let user_response = question_prompt(
-        //     Device::Power,
-        //     MessageType::Confirm,
-        //     "Is the battery charging?".to_owned(),
-        // );
+        if let Err(err) = display.set_brightness(0) {
+            log_message(
+                Device::Power,
+                MessageType::Error,
+                &format!("Failed to set display brightness: {}", err),
+            );
+            return Ok(false);
+        }
 
-        // if user_response {
-        //     log_message(Device::Power, MessageType::Info, "Battery - Charging");
-        // } else {
-        //     log_message(Device::Power, MessageType::Info, "Battery - Not Charging");
-        // }
+        log_message(Device::Power, MessageType::Info, "Camera - Off");
+        log_message(Device::Power, MessageType::Info, "Audio - Off");
 
-        // //wait for 15 seconds for user to check the power consumption in the mean time log info message that wait for 15 seconds
-        // log_message(
-        //     Device::Power,
-        //     MessageType::Action,
-        //     "Waiting for 15 seconds to check power consumption",
-        // );
+        // Ask user whether the battery is charging or not.
+        let user_response = question_prompt(
+            Device::Power,
+            MessageType::Confirm,
+            "Is the battery charging?".to_owned(),
+        );
+
+        if user_response {
+            log_message(Device::Power, MessageType::Info, "Battery - Charging");
+        } else {
+            log_message(Device::Power, MessageType::Info, "Battery - Not Charging");
+        }
+
+        //wait for 15 seconds for user to check the power consumption in the mean time log info message that wait for 15 seconds
+        log_message(
+            Device::Power,
+            MessageType::Action,
+            "Waiting for 15 seconds to check power consumption",
+        );
+
+        std::thread::sleep(std::time::Duration::from_secs(15));
 
         Ok(true)
     }
