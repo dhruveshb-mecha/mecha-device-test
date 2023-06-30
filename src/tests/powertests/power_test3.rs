@@ -108,40 +108,40 @@ impl TestAssertion for PowerTest3 {
             log_message(Device::Power, MessageType::Info, "Battery - Not Charging");
         }
 
-        //wait for 15 seconds for user to check the power consumption in the mean time log info message that wait for 15 seconds
-        log_message(
-            Device::Power,
-            MessageType::Action,
-            "Waiting for 15 seconds to check power consumption",
-        );
+        // Spawn a separate thread to run the GStreamer command for camera preview.
+        let camera_thread = thread::spawn(execute_gstreamer_command);
 
-        //log message that we're previewing the camera
-        log_message(
-            Device::Power,
-            MessageType::Action,
-            "Previewing the camera for 15 seconds",
-        );
+        // Get the current measurements while the camera preview is running.
+        let mut total_current = 0;
+        for _ in 0..5 {
+            let battery = Battery {
+                path: String::new(),
+                currnet_now: self.current_now.clone(),
+            };
 
-        execute_gstreamer_command();
+            let current_now = battery.get_current()?;
+            total_current += current_now;
+            // Log each individual current measurement.
+            log_message(
+                Device::Power,
+                MessageType::Info,
+                &format!("Current Now: {}", current_now),
+            );
 
-        log_message(
-            Device::Power,
-            MessageType::Action,
-            "Waiting for 15 seconds to check power consumption",
-        );
+            // Wait for 3 seconds between each measurement.
+            thread::sleep(Duration::from_secs(3));
+        }
 
-        let battery = Battery {
-            path: String::new(),
-            currnet_now: self.current_now.clone(),
-        };
-
-        let current_now = battery.get_current()?;
+        // Calculate the average current.
+        let average_current = total_current / 5;
         log_message(
             Device::Power,
             MessageType::Info,
-            &format!("Current Now: {}", current_now),
+            &format!("Average Current: {}", average_current),
         );
 
+        // Terminate the GStreamer command by waiting for the camera thread to finish.
+        camera_thread.join().expect("Failed to join camera thread.");
         Ok(true)
     }
 }
