@@ -125,7 +125,7 @@ impl TestAssertion for PowerTest3 {
             log_message(
                 Device::Power,
                 MessageType::Info,
-                &format!("Current Now: {}", current_now),
+                &format!("Current Now: {}", current_now / 1000),
             );
 
             // Wait for 3 seconds between each measurement.
@@ -137,7 +137,7 @@ impl TestAssertion for PowerTest3 {
         log_message(
             Device::Power,
             MessageType::Info,
-            &format!("Average Current: {}", average_current),
+            &format!("Average Current usage: {}", average_current / 1000),
         );
 
         // Terminate the GStreamer command by waiting for the camera thread to finish.
