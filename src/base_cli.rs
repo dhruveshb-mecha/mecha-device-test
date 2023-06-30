@@ -26,6 +26,7 @@ pub struct Battery {
     pub device: String,
     pub capacity: String,
     pub voltage: String,
+    pub current: String,
 }
 
 #[derive(Debug, Deserialize, Serialize, Default)]
