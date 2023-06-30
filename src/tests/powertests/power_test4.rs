@@ -50,6 +50,7 @@ fn play_audio(file_path: String) {
     match command {
         Ok(mut child) => {
             // Wait for the audio playback to finish.
+            thread::sleep(Duration::from_secs(15));
             let _ = child.wait();
         }
         Err(e) => {
