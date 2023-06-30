@@ -81,17 +81,17 @@ impl TestAssertion for PowerTest1 {
             currnet_now: self.current_now.clone(),
         };
 
-        let currnet_now = battery.get_current()?;
+        let currnet = battery.get_current()?;
 
-        println!("Current Consumption: {} mA", currnet_now);
+        //format the current to 2 decimal places
+        let current = format!("{:.2}", currnet);
 
-        // Print the value for current_now from the battery.
-        let current_now = log_message(
+        // Print the value for current from the battery.
+        log_message(
             Device::Power,
             MessageType::Info,
-            "Current Consumption: 0.0 mA",
+            &format!("Current: {} mA", current),
         );
-
         Ok(true)
     }
 }
