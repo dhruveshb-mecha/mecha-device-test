@@ -249,13 +249,13 @@ fn main() {
                         audio_path: device_config.interfaces.audio.audio_file.clone(),
                     }),
                 ),
-                (
-                    "power_test_5",
-                    Box::new(PowerTest5 {
-                        display_path: device_config.interfaces.display.device.clone(),
-                        camera_path: device_config.interfaces.camera.device.clone(),
-                    }),
-                ),
+                // (
+                //     "power_test_5",
+                //     Box::new(PowerTest5 {
+                //         display_path: device_config.interfaces.display.device.clone(),
+                //         camera_path: device_config.interfaces.camera.device.clone(),
+                //     }),
+                // ),
                 // ("camera", Box::new(CameraImageCapture)),
                 // we can add all test case over here.
                 // (
@@ -272,7 +272,7 @@ fn main() {
                 "all" => {
                     suit = test_cases
                         .into_iter()
-                        .filter(|(param, _)| !param.starts_with("powertest_"))
+                        .filter(|(param, _)| !param.starts_with("powertest"))
                         .map(|(_, assertion)| assertion)
                         .collect();
                 }
