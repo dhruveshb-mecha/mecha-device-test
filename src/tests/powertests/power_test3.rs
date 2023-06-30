@@ -92,7 +92,7 @@ impl TestAssertion for PowerTest3 {
             return Ok(false);
         }
 
-        log_message(Device::Power, MessageType::Info, "Camera - Off");
+        log_message(Device::Power, MessageType::Info, "Camera - On");
         log_message(Device::Power, MessageType::Info, "Audio - Off");
 
         //ask user that battery is charging or not based on that log info message that battery is charging or not
