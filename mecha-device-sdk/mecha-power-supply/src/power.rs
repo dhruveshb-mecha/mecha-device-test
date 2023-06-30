@@ -50,8 +50,6 @@ impl PowerSupplyInfo for Battery {
         let mut file = fs::File::open(&self.currnet_now)?;
         let mut contents = String::new();
         file.read_to_string(&mut contents)?;
-        print!("file name {:?}", &file);
-        print!("{}", contents);
 
         let value: i64 = contents
             .trim()

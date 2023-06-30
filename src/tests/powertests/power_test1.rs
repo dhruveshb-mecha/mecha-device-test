@@ -83,8 +83,8 @@ impl TestAssertion for PowerTest1 {
 
         let currnet = battery.get_current()?;
 
-        //format the current to 2 decimal places
-        let current = format!("{:.2}", currnet);
+        // the current value will be six digit number we need to convert it to mA
+        let current = currnet / 1000;
 
         // Print the value for current from the battery.
         log_message(
