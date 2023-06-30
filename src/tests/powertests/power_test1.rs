@@ -1,10 +1,12 @@
 use mecha_display::{Display, DisplayInterface};
+use mecha_power_supply::{Battery, PowerSupplyInfo};
 
 use crate::test_base::{log_message, question_prompt, Device, MessageType, TestAssertion};
 
 pub struct PowerTest1 {
     pub display_path: String,
     pub camera_path: String,
+    pub current_now: String,
 }
 
 impl TestAssertion for PowerTest1 {
@@ -73,6 +75,22 @@ impl TestAssertion for PowerTest1 {
         );
 
         std::thread::sleep(std::time::Duration::from_secs(15));
+
+        let mut battery = Battery {
+            path: String::new(),
+            currnet_now: self.current_now.clone(),
+        };
+
+        let currnet_now = battery.get_current()?;
+
+        println!("Current Consumption: {} mA", currnet_now);
+
+        // Print the value for current_now from the battery.
+        let current_now = log_message(
+            Device::Power,
+            MessageType::Info,
+            "Current Consumption: 0.0 mA",
+        );
 
         Ok(true)
     }

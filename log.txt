@@ -1,0 +1,4 @@
+[Power] Test: Power Test 1: Minimal
+[Power] Info: Printing Test Conditions
+[Power] Action: Setting Display Brightness to 0
+[Power] Error: Failed to set display brightness: No such file or directory (os error 2)

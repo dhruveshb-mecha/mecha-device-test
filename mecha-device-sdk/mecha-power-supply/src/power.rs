@@ -1,5 +1,5 @@
 use std::fs::File;
-use std::io::{BufRead, BufReader};
+use std::io::{self, BufRead, BufReader};
 
 #[derive(Debug)]
 pub struct PowerSupply {
@@ -23,10 +23,12 @@ pub trait PowerSupplyInfo {
     fn info(&self) -> String;
     fn set_device(&mut self, device: &str);
     fn get_device(&self) -> &str;
+    fn get_current(&self) -> Result<u32, io::Error>;
 }
 
 pub struct Battery {
     pub path: String,
+    pub currnet_now: String,
 }
 
 impl PowerSupplyInfo for Battery {
@@ -40,5 +42,14 @@ impl PowerSupplyInfo for Battery {
 
     fn get_device(&self) -> &str {
         &self.path
+    }
+
+    //to get current_now value read file from current_now path
+    fn get_current(&self) -> Result<u32, io::Error> {
+        let file = File::open(&self.currnet_now)?;
+        let reader = BufReader::new(file);
+        let line = reader.lines().next().unwrap()?;
+        let value = line.trim().parse::<u32>().unwrap();
+        Ok(value)
     }
 }

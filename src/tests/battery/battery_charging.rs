@@ -14,6 +14,7 @@ impl TestAssertion for BatteryCharging {
     fn test(&self) -> Result<bool> {
         let mut battery = Battery {
             path: String::new(),
+            currnet_now: String::new(),
         };
 
         log_message(

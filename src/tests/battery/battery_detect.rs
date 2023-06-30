@@ -14,6 +14,7 @@ impl TestAssertion for BatteryDetect {
     fn test(&self) -> Result<bool> {
         let mut battery = Battery {
             path: String::new(),
+            currnet_now: String::new(),
         };
 
         // will be replaced with actual behavior using SDK
