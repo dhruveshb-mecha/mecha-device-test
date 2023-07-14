@@ -1,9 +1,5 @@
 use anyhow::{anyhow, Result};
-use std::{
-    process::{Command, Output, Stdio},
-    thread::sleep,
-    time::Duration,
-};
+use std::process::{Command, Output};
 
 pub trait CameraInterface {
     fn capture_image(&self, image_name: &str) -> Result<()>;
@@ -38,27 +34,22 @@ impl CameraInterface for Camera {
     }
 
     fn preview_image(&self, image_name: &str) -> Result<()> {
-        let command_output = Command::new("weston-image")
-            .args(&[image_name])
-            .stdout(std::process::Stdio::null())
-            .stderr(std::process::Stdio::null())
-            .output()
-            .map_err(|e| anyhow!("Failed to execute command: {}", e))?;
-
-        sleep(Duration::from_secs(5));
-        Command::new("pkill")
+        let mut output = Command::new("timeout")
+            .arg("5")
             .arg("weston-image")
-            .stdout(Stdio::null())
-            .stderr(Stdio::null())
-            .output()
+            .arg(image_name)
+            .spawn()
             .map_err(|e| anyhow!("Failed to execute command: {}", e))?;
 
-        if command_output.status.success() {
-            sleep(Duration::from_secs(5));
-
-            Ok(())
-        } else {
-            Err(anyhow!("Failed to preview the image"))
+        match output.wait() {
+            Ok(status) => {
+                if status.success() {
+                    Ok(())
+                } else {
+                    Err(anyhow!("Failed to preview the image"))
+                }
+            }
+            Err(err) => Err(anyhow!("Failed to wait for command completion: {}", err)),
         }
     }
 }
