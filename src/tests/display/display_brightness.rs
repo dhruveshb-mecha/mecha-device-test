@@ -26,8 +26,8 @@ impl TestAssertion for DisplayBrightness {
         // will be replaced with actual behavior using SDK
         display.set_device("/sys/class/backlight/backlight/brightness");
 
-        // Brightness level to test (100% and 10%)
-        let brightness_levels = [255, 16];
+        // Brightness level to test (10% and 100%)
+        let brightness_levels = [16, 255];
 
         log_message(
             Device::Display,

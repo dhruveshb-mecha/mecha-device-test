@@ -169,6 +169,8 @@ fn main() {
                         device: device_config.interfaces.display.device.clone(),
                     }),
                 ),
+                //add camera test cases over here
+                ("camera", Box::new(CameraImageCapture)),
                 // add gyro test cases over here
                 (
                     "gyro",
@@ -257,7 +259,7 @@ fn main() {
                 //         camera_path: device_config.interfaces.camera.device.clone(),
                 //     }),
                 // ),
-                ("camera", Box::new(CameraImageCapture)),
+
                 // we can add all test case over here.
                 // (
                 //     "led",
