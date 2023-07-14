@@ -12,6 +12,7 @@ use test_base::{TestAssertion, TestRunner};
 use tests::adc::adc_data::AdcTest;
 use tests::battery::battery_charging::BatteryCharging;
 use tests::battery::battery_detect::BatteryDetect;
+use tests::camera::capture_image::CameraImageCapture;
 use tests::cpu::cpu_stress_test::CpuStressTest;
 // use tests::camera::capture_image::CameraImageCapture;
 use tests::display::display_brightness::DisplayBrightness;
@@ -256,7 +257,7 @@ fn main() {
                 //         camera_path: device_config.interfaces.camera.device.clone(),
                 //     }),
                 // ),
-                // ("camera", Box::new(CameraImageCapture)),
+                ("camera", Box::new(CameraImageCapture)),
                 // we can add all test case over here.
                 // (
                 //     "led",

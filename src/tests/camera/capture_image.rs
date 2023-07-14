@@ -1,4 +1,4 @@
-use crate::test_base::{question_prompt, Device, MessageType, TestAssertion};
+use crate::test_base::{log_message, question_prompt, Device, MessageType, TestAssertion};
 use anyhow::Result;
 use mecha_camera::{Camera, CameraInterface};
 
@@ -11,19 +11,28 @@ impl TestAssertion for CameraImageCapture {
 
     fn test(&self) -> Result<bool> {
         let camera = Camera;
-        camera.capture_image("test_image")?;
-        print!("Capturing Image Please wait...");
-        std::thread::sleep(std::time::Duration::from_secs(2));
+        log_message(Device::Camera, MessageType::Action, "Capturing Image");
+        let image_name = "image.jpg";
+        camera.capture_image(image_name)?;
+        log_message(Device::Camera, MessageType::Action, "Image Captured");
+
+        log_message(Device::Camera, MessageType::Action, "Previewing Image");
+        camera.preview_image(image_name)?;
+
+        //ask user if image previewed correctly if yes return true else return false
         let user_response = question_prompt(
-            Device::Camera,
+            Device::Battery,
             MessageType::Confirm,
-            "Is the camera image captured?".to_string(),
+            "Are you able to see Image ?".to_string(),
         );
         if user_response {
-            println!("Camera Image Captured");
+            log_message(Device::Battery, MessageType::Action, "Image Previewed");
         } else {
-            println!("Camera Image Not Captured");
-            return Ok(false);
+            log_message(
+                Device::Battery,
+                MessageType::Action,
+                "Image Preview Failed ",
+            );
         }
 
         Ok(true)
