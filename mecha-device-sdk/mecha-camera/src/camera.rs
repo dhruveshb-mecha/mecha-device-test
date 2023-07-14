@@ -41,15 +41,10 @@ impl CameraInterface for Camera {
             .spawn()
             .map_err(|e| anyhow!("Failed to execute command: {}", e))?;
 
-        match output.wait() {
-            Ok(status) => {
-                if status.success() {
-                    Ok(())
-                } else {
-                    Err(anyhow!("Failed to preview the image"))
-                }
-            }
-            Err(err) => Err(anyhow!("Failed to wait for command completion: {}", err)),
-        }
+        let status = output
+            .wait()
+            .map_err(|err| anyhow!("Failed to wait for command completion: {}", err))?;
+
+        Ok(()) // Always return Ok, regardless of success or failure
     }
 }
