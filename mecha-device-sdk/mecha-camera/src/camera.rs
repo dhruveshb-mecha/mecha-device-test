@@ -1,5 +1,9 @@
 use anyhow::{anyhow, Result};
-use std::process::{Command, Output};
+use std::{
+    process::{Command, Output, Stdio},
+    thread::sleep,
+    time::Duration,
+};
 
 pub trait CameraInterface {
     fn capture_image(&self, image_name: &str) -> Result<()>;
@@ -27,10 +31,8 @@ impl CameraInterface for Camera {
             .map_err(|e| anyhow!("Failed to execute command: {}", e))?;
 
         if command_output.status.success() {
-            println!("Image captured and saved to '{}'", image_name);
             Ok(())
         } else {
-            println!("Failed to capture the image");
             Err(anyhow!("Failed to capture the image"))
         }
     }
@@ -43,7 +45,17 @@ impl CameraInterface for Camera {
             .output()
             .map_err(|e| anyhow!("Failed to execute command: {}", e))?;
 
+        sleep(Duration::from_secs(5));
+        Command::new("pkill")
+            .arg("weston-image")
+            .stdout(Stdio::null())
+            .stderr(Stdio::null())
+            .output()
+            .map_err(|e| anyhow!("Failed to execute command: {}", e))?;
+
         if command_output.status.success() {
+            sleep(Duration::from_secs(5));
+
             Ok(())
         } else {
             Err(anyhow!("Failed to preview the image"))

@@ -11,27 +11,40 @@ impl TestAssertion for CameraImageCapture {
 
     fn test(&self) -> Result<bool> {
         let camera = Camera;
-        log_message(Device::Camera, MessageType::Action, "Capturing Image");
-        let image_name = "image.jpg";
-        camera.capture_image(image_name)?;
-        log_message(Device::Camera, MessageType::Action, "Image Captured");
 
-        log_message(Device::Camera, MessageType::Action, "Previewing Image");
-        camera.preview_image(image_name)?;
-
-        //ask user if image previewed correctly if yes return true else return false
+        // Ask the user if they have pointed the camera at the proper location
         let user_response = question_prompt(
-            Device::Battery,
+            Device::Camera,
             MessageType::Confirm,
-            "Are you able to see Image ?".to_string(),
+            "Have you pointed the camera at the proper location for image capture?".to_string(),
         );
+
         if user_response {
-            log_message(Device::Battery, MessageType::Action, "Image Previewed");
+            log_message(Device::Camera, MessageType::Action, "Capturing Image");
+            let image_name = "image.jpg";
+            camera.capture_image(image_name)?;
+            log_message(Device::Camera, MessageType::Action, "Image Captured");
+
+            log_message(Device::Camera, MessageType::Action, "Previewing Image");
+            camera.preview_image(image_name)?;
+
+            // Ask the user if the image was previewed correctly
+            let user_response = question_prompt(
+                Device::Battery,
+                MessageType::Confirm,
+                "Are you able to see the Image?".to_string(),
+            );
+
+            if user_response {
+                log_message(Device::Camera, MessageType::Action, "Image Previewed");
+            } else {
+                log_message(Device::Camera, MessageType::Action, "Image Preview Failed");
+            }
         } else {
             log_message(
-                Device::Battery,
+                Device::Camera,
                 MessageType::Action,
-                "Image Preview Failed ",
+                "Camera not pointed at the proper location",
             );
         }
 
