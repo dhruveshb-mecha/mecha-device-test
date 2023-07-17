@@ -77,6 +77,11 @@ mod tests {
     pub mod trust_ic {
         pub mod detect_trust_ic;
     }
+
+    pub mod wifi {
+        pub mod wifi_detect;
+    }
+
     pub mod powertests {
         pub mod power_test1;
         pub mod power_test2;
